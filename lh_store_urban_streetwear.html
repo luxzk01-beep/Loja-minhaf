@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LH STORE | Urban Streetwear</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkbg: '#0a0a0a',
+                        cardbg: '#141414',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #262626;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #404040;
+        }
+    </style>
+</head>
+<body class="bg-darkbg text-zinc-100 min-h-screen flex flex-col selection:bg-zinc-800 selection:text-white">
+
+    <!-- ANNOUNCEMENT BAR -->
+    <div class="bg-zinc-900 border-b border-zinc-800 text-zinc-400 text-[11px] font-medium tracking-widest uppercase py-2 text-center overflow-hidden">
+        <span>Frete grátis para compras acima de R$ 250,00 • Use o Painel Admin para cadastrar suas peças</span>
+    </div>
+
+    <!-- HEADER -->
+    <header class="sticky top-0 z-40 bg-darkbg/95 backdrop-blur-md border-b border-zinc-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Mobile Menu Toggle -->
+            <button id="mobile-menu-btn" class="md:hidden text-zinc-400 hover:text-white text-xl p-2">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <!-- Logo -->
+            <a href="#" class="text-2xl sm:text-3xl font-black tracking-tighter uppercase italic flex items-center gap-2">
+                <span class="bg-white text-black px-2 py-0.5 rounded-sm">LH</span> STORE
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center space-x-8 text-xs font-semibold uppercase tracking-wider text-zinc-400">
+                <a href="#products-section" class="hover:text-white transition">Início</a>
+                <a href="#products-section" class="hover:text-white transition">Coleções</a>
+                <a href="#products-section" class="hover:text-white transition">Lançamentos</a>
+            </nav>
+
+            <!-- Nav Actions -->
+            <div class="flex items-center space-x-3 sm:space-x-4">
+                <!-- Admin Panel Button -->
+                <button id="open-admin-btn" class="bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-white px-3.5 py-2 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition shadow-md">
+                    <i class="fa-solid fa-gear text-zinc-400"></i>
+                    <span class="hidden sm:inline">Painel Admin</span>
+                </button>
+
+                <!-- Wishlist Toggle -->
+                <button id="wishlist-btn" class="relative text-zinc-400 hover:text-white transition p-2">
+                    <i class="fa-regular fa-heart text-xl"></i>
+                    <span id="wishlist-count" class="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
+                </button>
+
+                <!-- Cart Toggle -->
+                <button id="cart-btn" class="relative text-zinc-400 hover:text-white transition p-2 flex items-center gap-2">
+                    <div class="relative">
+                        <i class="fa-solid fa-bag-shopping text-xl"></i>
+                        <span id="cart-count" class="absolute -top-1 -right-1 bg-white text-black text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                    </div>
+                    <span class="hidden sm:inline-block text-xs font-semibold text-zinc-300 uppercase tracking-wider">Sacola</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="relative bg-zinc-950 overflow-hidden border-b border-zinc-900 py-24 sm:py-32">
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-zinc-800/10 via-zinc-950/90 to-darkbg pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col items-center text-center">
+            <span class="text-xs sm:text-sm font-bold uppercase tracking-widest text-zinc-400 bg-zinc-900 border border-zinc-800 px-4 py-1.5 rounded-full mb-6 shadow-inner">
+                Minimalist Urban Streetwear
+            </span>
+            <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight uppercase max-w-3xl leading-tight mb-6">
+                Sua Identidade <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-400 to-zinc-600">Nas Ruas</span>
+            </h1>
+            <p class="text-zinc-400 text-base sm:text-lg max-w-xl mb-10">
+                Loja configurada sem produtos predefinidos. Utilize o Painel Admin para cadastrar suas peças, fotos e valores.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4">
+                <button onclick="openAdminModal()" class="bg-white text-black font-bold uppercase tracking-wider px-8 py-4 rounded-xl hover:bg-zinc-200 transition text-center shadow-xl flex items-center justify-center gap-2 text-xs">
+                    <i class="fa-solid fa-plus-circle text-sm"></i> Cadastrar Primeira Peça
+                </button>
+                <a href="#products-section" class="bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-white font-bold uppercase tracking-wider px-8 py-4 rounded-xl transition text-center text-xs flex items-center justify-center">
+                    Ver Catálogo
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN CONTENT -->
+    <main id="products-section" class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full">
+        <!-- Search & Filter bar -->
+        <div class="flex flex-col md:flex-row items-center justify-between mb-10 gap-4">
+            <!-- Categories Bar -->
+            <div class="flex items-center gap-2 overflow-x-auto pb-2 w-full md:w-auto scrollbar-none" id="category-filters">
+                <button data-category="todos" class="category-btn px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition bg-white text-black">
+                    Todas as Peças
+                </button>
+                <button data-category="camisetas" class="category-btn px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition bg-zinc-900 text-zinc-400 hover:bg-zinc-800 hover:text-white border border-zinc-800">
+                    Camisetas
+                </button>
+                <button data-category="moletons" class="category-btn px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition bg-zinc-900 text-zinc-400 hover:bg-zinc-800 hover:text-white border border-zinc-800">
+                    Moletons
+                </button>
+                <button data-category="calcas" class="category-btn px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition bg-zinc-900 text-zinc-400 hover:bg-zinc-800 hover:text-white border border-zinc-800">
+                    Calças & Cargo
+                </button>
+                <button data-category="acessorios" class="category-btn px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition bg-zinc-900 text-zinc-400 hover:bg-zinc-800 hover:text-white border border-zinc-800">
+                    Acessórios
+                </button>
+            </div>
+
+            <!-- Search input -->
+            <div class="relative w-full md:w-72">
+                <input type="text" id="search-input" placeholder="Buscar no catálogo..." 
+                    class="w-full bg-zinc-900 border border-zinc-800 rounded-full py-2.5 pl-10 pr-4 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-zinc-500 transition">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-zinc-500 text-xs"></i>
+            </div>
+        </div>
+
+        <!-- Products Grid -->
+        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <!-- Dynamically populated or empty state -->
+        </div>
+
+        <!-- Empty State (0 products) -->
+        <div id="empty-state" class="flex flex-col items-center justify-center py-28 text-center border-2 border-dashed border-zinc-800/80 rounded-2xl bg-zinc-900/10">
+            <div class="w-16 h-16 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 text-2xl mb-4 shadow-inner">
+                <i class="fa-solid fa-shirt"></i>
+            </div>
+            <h3 class="text-xl font-bold uppercase tracking-tight mb-2 text-white">Nenhum produto cadastrado no momento</h3>
+            <p class="text-zinc-500 text-xs max-w-sm mb-8 leading-relaxed">Sua loja está pronta. Adicione a primeira foto, título e preço das peças que deseja vender.</p>
+            <button onclick="openAdminModal()" class="bg-white text-black font-bold uppercase tracking-wider px-6 py-3.5 rounded-xl text-xs hover:bg-zinc-200 transition shadow-lg flex items-center gap-2">
+                <i class="fa-solid fa-plus text-xs"></i> Adicionar Primeiro Produto
+            </button>
+        </div>
+    </main>
+
+    <!-- ADMIN PANEL MODAL -->
+    <div id="admin-modal" class="fixed inset-0 z-50 overflow-y-auto hidden flex items-center justify-center p-4">
+        <div id="admin-backdrop" class="fixed inset-0 bg-black/85 backdrop-blur-sm transition-opacity"></div>
+        <div id="admin-content" class="relative bg-zinc-950 border border-zinc-800 rounded-2xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl z-10 transform scale-95 opacity-0 transition-all duration-300">
+            <div class="flex items-center justify-between pb-4 border-b border-zinc-800 mb-6">
+                <div>
+                    <h2 class="text-lg font-bold uppercase tracking-wider flex items-center gap-2 text-white">
+                        <i class="fa-solid fa-gear text-zinc-400"></i> Painel Admin - LH STORE
+                    </h2>
+                    <p class="text-xs text-zinc-500 mt-1">Gerencie seu estoque e adicione novas roupas ao site.</p>
+                </div>
+                <button onclick="closeAdminModal()" class="text-zinc-400 hover:text-white p-2 text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Add Product Form -->
+            <form id="product-form" onsubmit="handleProductSubmit(event)" class="space-y-4 mb-8 bg-zinc-900/50 p-5 rounded-xl border border-zinc-800">
+                <h3 class="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-2">Cadastrar Nova Peça</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-zinc-400 mb-1">Nome do Produto</label>
+                        <input type="text" id="p-name" placeholder="Ex: Camiseta Oversized Heavy" required 
+                            class="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-3.5 py-2.5 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-white">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-zinc-400 mb-1">Categoria</label>
+                        <select id="p-category" class="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-white">
+                            <option value="camisetas">Camisetas</option>
+                            <option value="moletons">Moletons</option>
+                            <option value="calcas">Calças & Cargo</option>
+                            <option value="acessorios">Acessórios</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-zinc-400 mb-1">Preço (R$)</label>
+                        <input type="number" step="0.01" id="p-price" placeholder="189.90" required 
+                            class="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-3.5 py-2.5 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-white">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-zinc-400 mb-1">Tag (Opcional)</label>
+                        <input type="text" id="p-tag" placeholder="Ex: LANÇAMENTO, ESGOTADO, -20%" 
+                            class="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-3.5 py-2.5 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-white">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-zinc-400 mb-1">URL Foto Principal</label>
+                        <input type="url" id="p-image" placeholder="https://exemplo.com/foto1.jpg" required 
+                            class="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-3.5 py-2.5 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-white">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-zinc-400 mb-1">URL Foto Hover (Opcional)</label>
+                        <input type="url" id="p-image-hover" placeholder="https://exemplo.com/foto2.jpg" 
+                            class="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-3.5 py-2.5 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-white">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-[11px] font-bold uppercase tracking-wider text-zinc-400 mb-1">Descrição</label>
+                    <textarea id="p-desc" rows="2" placeholder="Ex: Algodão premium 280g, modelagem boxy street..." required
+                        class="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-3.5 py-2.5 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-white"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-white text-black font-bold uppercase tracking-wider text-xs py-3.5 rounded-xl hover:bg-zinc-200 transition shadow-md">
+                    Salvar e Publicar no Site
+                </button>
+            </form>
+
+            <!-- Current Catalog List -->
+            <div>
+                <h3 class="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-3">Estoque Cadastrado (<span id="admin-total-count">0</span>)</h3>
+                <div id="admin-products-list" class="max-h-48 overflow-y-auto space-y-2 pr-2 divide-y divide-zinc-900">
+                    <!-- Dynamic list -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRODUCT DETAIL MODAL -->
+    <div id="product-modal" class="fixed inset-0 z-50 overflow-y-auto hidden flex items-center justify-center p-4">
+        <div id="modal-backdrop" class="fixed inset-0 bg-black/80 backdrop-blur-sm transition-opacity"></div>
+        <div id="modal-content" class="relative bg-zinc-950 border border-zinc-800 rounded-2xl max-w-4xl w-full overflow-hidden shadow-2xl z-10 grid grid-cols-1 md:grid-cols-2 transform scale-95 opacity-0 transition-all duration-300">
+            <button id="close-product-modal" class="absolute top-4 right-4 z-20 bg-zinc-900/80 text-zinc-400 hover:text-white w-10 h-10 rounded-full flex items-center justify-center backdrop-blur">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div class="bg-zinc-900 relative h-72 md:h-full min-h-[380px]">
+                <img id="modal-img" src="" alt="Produto" class="w-full h-full object-cover">
+            </div>
+            <div class="p-6 sm:p-8 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-2">
+                        <span id="modal-category" class="text-xs font-bold uppercase tracking-widest text-zinc-400 bg-zinc-900 px-3 py-1 rounded-full border border-zinc-800"></span>
+                        <span id="modal-tag-badge" class="text-[10px] font-extrabold uppercase tracking-widest text-black bg-white px-2.5 py-0.5 rounded-sm hidden"></span>
+                    </div>
+                    <h2 id="modal-title" class="text-2xl sm:text-3xl font-extrabold uppercase tracking-tight mt-3 mb-2 text-white"></h2>
+                    <div id="modal-price" class="text-xl font-black text-white mb-6"></div>
+                    <p id="modal-desc" class="text-zinc-400 text-xs sm:text-sm mb-6 leading-relaxed"></p>
+
+                    <!-- Sizes Selector -->
+                    <div class="mb-6">
+                        <label class="block text-xs font-bold uppercase tracking-wider text-zinc-400 mb-2">Selecione o Tamanho</label>
+                        <div id="modal-sizes" class="flex gap-3">
+                            <button class="px-4 py-2 rounded-xl text-xs font-bold uppercase transition border bg-white text-black border-white">P</button>
+                            <button class="px-4 py-2 rounded-xl text-xs font-bold uppercase transition border bg-zinc-900 text-zinc-300 border-zinc-800">M</button>
+                            <button class="px-4 py-2 rounded-xl text-xs font-bold uppercase transition border bg-zinc-900 text-zinc-300 border-zinc-800">G</button>
+                            <button class="px-4 py-2 rounded-xl text-xs font-bold uppercase transition border bg-zinc-900 text-zinc-300 border-zinc-800">GG</button>
+                        </div>
+                    </div>
+
+                    <!-- Quantity -->
+                    <div class="mb-6">
+                        <label class="block text-xs font-bold uppercase tracking-wider text-zinc-400 mb-2">Quantidade</label>
+                        <div class="flex items-center border border-zinc-800 rounded-xl w-32 bg-zinc-900 overflow-hidden">
+                            <button id="qty-minus" class="px-3 py-2 text-zinc-400 hover:text-white transition"><i class="fa-solid fa-minus text-xs"></i></button>
+                            <span id="modal-qty" class="flex-1 text-center font-bold text-sm text-white">1</span>
+                            <button id="qty-plus" class="px-3 py-2 text-zinc-400 hover:text-white transition"><i class="fa-solid fa-plus text-xs"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="modal-add-to-cart" class="w-full bg-white text-black font-bold uppercase tracking-wider py-4 rounded-xl hover:bg-zinc-200 transition shadow-lg flex items-center justify-center gap-2 text-xs">
+                    <i class="fa-solid fa-bag-shopping"></i> Adicionar à Sacola
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CART DRAWER -->
+    <div id="cart-drawer" class="fixed inset-0 z-50 overflow-hidden hidden">
+        <div id="cart-backdrop" class="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity opacity-0"></div>
+        <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
+            <div id="cart-panel" class="w-screen max-w-md bg-zinc-950 border-l border-zinc-800 shadow-2xl transform transition-transform translate-x-full flex flex-col">
+                <div class="p-6 border-b border-zinc-800 flex items-center justify-between">
+                    <h2 class="text-xs font-bold uppercase tracking-wider flex items-center gap-2 text-white">
+                        <i class="fa-solid fa-bag-shopping"></i> Sua Sacola (<span id="cart-item-count">0</span>)
+                    </h2>
+                    <button id="close-cart-btn" class="text-zinc-400 hover:text-white p-2 text-lg">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <div id="cart-items-container" class="flex-1 overflow-y-auto p-6 space-y-4 divide-y divide-zinc-900"></div>
+                <div class="p-6 border-t border-zinc-800 bg-zinc-900/40">
+                    <div class="space-y-2 mb-6">
+                        <div class="flex justify-between text-xs text-zinc-400">
+                            <span>Subtotal</span>
+                            <span id="cart-subtotal" class="font-semibold text-white">R$ 0,00</span>
+                        </div>
+                        <div class="flex justify-between text-xs text-zinc-400">
+                            <span>Frete</span>
+                            <span class="text-green-400 font-semibold uppercase">Grátis</span>
+                        </div>
+                        <div class="flex justify-between text-sm font-bold text-white pt-2 border-t border-zinc-800">
+                            <span>Total</span>
+                            <span id="cart-total" class="text-base">R$ 0,00</span>
+                        </div>
+                    </div>
+                    <button id="checkout-btn" class="w-full bg-white text-black font-bold uppercase tracking-wider py-4 rounded-xl hover:bg-zinc-200 transition text-center shadow-lg flex items-center justify-center gap-2 text-xs">
+                        <span>Finalizar Pedido</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WISHLIST DRAWER -->
+    <div id="wishlist-drawer" class="fixed inset-0 z-50 overflow-hidden hidden">
+        <div id="wishlist-backdrop" class="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity opacity-0"></div>
+        <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
+            <div id="wishlist-panel" class="w-screen max-w-md bg-zinc-950 border-l border-zinc-800 shadow-2xl transform transition-transform translate-x-full flex flex-col">
+                <div class="p-6 border-b border-zinc-800 flex items-center justify-between">
+                    <h2 class="text-xs font-bold uppercase tracking-wider flex items-center gap-2 text-red-500">
+                        <i class="fa-solid fa-heart"></i> Favoritos (<span id="wishlist-item-count">0</span>)
+                    </h2>
+                    <button id="close-wishlist-btn" class="text-zinc-400 hover:text-white p-2 text-lg">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <div id="wishlist-items-container" class="flex-1 overflow-y-auto p-6 space-y-4 divide-y divide-zinc-900"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOTIFICATION TOAST -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 bg-zinc-900 border border-zinc-700 text-white px-5 py-3.5 rounded-xl shadow-2xl flex items-center gap-3">
+        <i id="toast-icon" class="fa-solid fa-circle-check text-green-400 text-base"></i>
+        <div>
+            <h4 id="toast-title" class="text-xs font-bold uppercase tracking-wider">Sucesso</h4>
+            <p id="toast-msg" class="text-[11px] text-zinc-400">Ação realizada com sucesso.</p>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-zinc-950 border-t border-zinc-900 mt-20 text-zinc-400 text-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 grid grid-cols-1 md:grid-cols-4 gap-10">
+            <div>
+                <a href="#" class="text-2xl font-black tracking-tighter uppercase italic text-white flex items-center gap-2 mb-4">
+                    <span class="bg-white text-black px-2 py-0.5 rounded-sm">LH</span> STORE
+                </a>
+                <p class="text-[11px] text-zinc-500 leading-relaxed mb-4">
+                    O epicentro do streetwear nacional. Gerencie suas peças facilmente através do Painel Admin.
+                </p>
+            </div>
+            <div>
+                <h4 class="text-white font-bold uppercase tracking-wider text-xs mb-4">Categorias</h4>
+                <ul class="space-y-2 text-[11px]">
+                    <li><a href="#products-section" class="hover:text-white transition">Camisetas Oversized</a></li>
+                    <li><a href="#products-section" class="hover:text-white transition">Moletons & Hoodies</a></li>
+                    <li><a href="#products-section" class="hover:text-white transition">Calças Cargo</a></li>
+                    <li><a href="#products-section" class="hover:text-white transition">Acessórios</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold uppercase tracking-wider text-xs mb-4">Atendimento</h4>
+                <ul class="space-y-2 text-[11px]">
+                    <li><a href="#" class="hover:text-white transition">Rastrear Pedido</a></li>
+                    <li><a href="#" class="hover:text-white transition">Trocas & Devoluções</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold uppercase tracking-wider text-xs mb-4">Gerenciamento</h4>
+                <button onclick="openAdminModal()" class="w-full bg-zinc-900 hover:bg-zinc-800 text-white border border-zinc-700 font-bold uppercase tracking-wider text-[11px] py-3 rounded-lg transition">
+                    Abrir Painel Admin
+                </button>
+            </div>
+        </div>
+        <div class="border-t border-zinc-900 py-6 text-center text-[11px] text-zinc-600">
+            &copy; 2026 LH STORE. Todos os direitos reservados.
+        </div>
+    </footer>
+
+    <script>
+        // Start completely empty (0 products by default)
+        let products = JSON.parse(localStorage.getItem('lh_custom_products')) || [];
+        let cart = JSON.parse(localStorage.getItem('lh_cart')) || [];
+        let wishlist = JSON.parse(localStorage.getItem('lh_wishlist')) || [];
+        
+        let currentCategory = 'todos';
+        let currentSearchQuery = '';
+        let selectedProductForModal = null;
+        let selectedModalSize = 'P';
+        let modalQuantity = 1;
+
+        // DOM Elements
+        const productsGrid = document.getElementById('products-grid');
+        const emptyState = document.getElementById('empty-state');
+        const searchInput = document.getElementById('search-input');
+        const categoryFilters = document.getElementById('category-filters');
+        
+        // Admin Modal
+        const adminModal = document.getElementById('admin-modal');
+        const adminBackdrop = document.getElementById('admin-backdrop');
+        const adminContent = document.getElementById('admin-content');
+        const openAdminBtn = document.getElementById('open-admin-btn');
+        const adminProductsList = document.getElementById('admin-products-list');
+        const adminTotalCount = document.getElementById('admin-total-count');
+
+        // Cart Drawer
+        const cartBtn = document.getElementById('cart-btn');
+        const cartDrawer = document.getElementById('cart-drawer');
+        const cartPanel = document.getElementById('cart-panel');
+        const cartBackdrop = document.getElementById('cart-backdrop');
+        const closeCartBtn = document.getElementById('close-cart-btn');
+        const cartItemsContainer = document.getElementById('cart-items-container');
+        const cartCount = document.getElementById('cart-count');
+        const cartItemCount = document.getElementById('cart-item-count');
+        const cartSubtotal = document.getElementById('cart-subtotal');
+        const cartTotal = document.getElementById('cart-total');
+        const checkoutBtn = document.getElementById('checkout-btn');
+
+        // Wishlist Drawer
+        const wishlistBtn = document.getElementById('wishlist-btn');
+        const wishlistDrawer = document.getElementById('wishlist-drawer');
+        const wishlistPanel = document.getElementById('wishlist-panel');
+        const wishlistBackdrop = document.getElementById('wishlist-backdrop');
+        const closeWishlistBtn = document.getElementById('close-wishlist-btn');
+        const wishlistItemsContainer = document.getElementById('wishlist-items-container');
+        const wishlistCount = document.getElementById('wishlist-count');
+
+        // Product Detail Modal
+        const productModal = document.getElementById('product-modal');
+        const modalBackdrop = document.getElementById('modal-backdrop');
+        const modalContent = document.getElementById('modal-content');
+        const closeProductModal = document.getElementById('close-product-modal');
+        const modalImg = document.getElementById('modal-img');
+        const modalCategory = document.getElementById('modal-category');
+        const modalTagBadge = document.getElementById('modal-tag-badge');
+        const modalTitle = document.getElementById('modal-title');
+        const modalPrice = document.getElementById('modal-price');
+        const modalDesc = document.getElementById('modal-desc');
+        const modalSizes = document.getElementById('modal-sizes');
+        const modalQty = document.getElementById('modal-qty');
+        const qtyMinus = document.getElementById('qty-minus');
+        const qtyPlus = document.getElementById('qty-plus');
+        const modalAddToCart = document.getElementById('modal-add-to-cart');
+
+        // Toast
+        const toast = document.getElementById('toast');
+        const toastTitle = document.getElementById('toast-title');
+        const toastMsg = document.getElementById('toast-msg');
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderProducts();
+            updateCartUI();
+            updateWishlistUI();
+            setupEventListeners();
+        });
+
+        function setupEventListeners() {
+            categoryFilters.querySelectorAll('.category-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    categoryFilters.querySelectorAll('.category-btn').forEach(b => {
+                        b.classList.remove('bg-white', 'text-black');
+                        b.classList.add('bg-zinc-900', 'text-zinc-400', 'border', 'border-zinc-800');
+                    });
+                    btn.classList.remove('bg-zinc-900', 'text-zinc-400', 'border', 'border-zinc-800');
+                    btn.classList.add('bg-white', 'text-black');
+                    
+                    currentCategory = btn.getAttribute('data-category');
+                    renderProducts();
+                });
+            });
+
+            searchInput.addEventListener('input', (e) => {
+                currentSearchQuery = e.target.value.toLowerCase();
+                renderProducts();
+            });
+
+            openAdminBtn.addEventListener('click', openAdminModal);
+
+            cartBtn.addEventListener('click', openCart);
+            closeCartBtn.addEventListener('click', closeCart);
+            cartBackdrop.addEventListener('click', closeCart);
+
+            wishlistBtn.addEventListener('click', openWishlist);
+            closeWishlistBtn.addEventListener('click', closeWishlist);
+            wishlistBackdrop.addEventListener('click', closeWishlist);
+
+            closeProductModal.addEventListener('click', closeModal);
+            modalBackdrop.addEventListener('click', closeModal);
+
+            qtyMinus.addEventListener('click', () => {
+                if (modalQuantity > 1) {
+                    modalQuantity--;
+                    modalQty.textContent = modalQuantity;
+                }
+            });
+
+            qtyPlus.addEventListener('click', () => {
+                if (modalQuantity < 10) {
+                    modalQuantity++;
+                    modalQty.textContent = modalQuantity;
+                }
+            });
+
+            modalAddToCart.addEventListener('click', () => {
+                if (!selectedModalSize) {
+                    showToast('Atenção', 'Selecione um tamanho.', 'error');
+                    return;
+                }
+                addToCart(selectedProductForModal.id, selectedModalSize, modalQuantity);
+                closeModal();
+                openCart();
+            });
+
+            checkoutBtn.addEventListener('click', () => {
+                if (cart.length === 0) return;
+                showToast('Pedido Finalizado!', 'Compra simulada com sucesso na LH STORE.');
+                cart = [];
+                localStorage.setItem('lh_cart', JSON.stringify(cart));
+                updateCartUI();
+                closeCart();
+            });
+        }
+
+        function renderProducts() {
+            let filtered = products.filter(p => {
+                const matchesCategory = currentCategory === 'todos' || p.category === currentCategory;
+                const matchesSearch = p.name.toLowerCase().includes(currentSearchQuery) || p.description.toLowerCase().includes(currentSearchQuery);
+                return matchesCategory && matchesSearch;
+            });
+
+            productsGrid.innerHTML = '';
+
+            if (filtered.length === 0) {
+                emptyState.classList.remove('flex');
+                emptyState.classList.add('hidden');
+                if (products.length === 0) {
+                    emptyState.classList.remove('hidden');
+                    emptyState.classList.add('flex');
+                } else {
+                    // Search returned nothing
+                    productsGrid.innerHTML = `<div class="col-span-full py-20 text-center text-zinc-500 text-xs uppercase font-semibold">Nenhuma peça encontrada para esta busca.</div>`;
+                }
+                return;
+            } else {
+                emptyState.classList.remove('flex');
+                emptyState.classList.add('hidden');
+            }
+
+            filtered.forEach(product => {
+                const isWishlisted = wishlist.some(item => item.id === product.id);
+                const card = document.createElement('div');
+                card.className = 'group bg-zinc-900/60 border border-zinc-800/80 rounded-2xl overflow-hidden hover:border-zinc-600 transition flex flex-col justify-between';
+                
+                // Secondary image hover effect if provided
+                const mainImg = product.image;
+                const hoverImg = product.imageHover || product.image;
+
+                card.innerHTML = `
+                    <div class="relative bg-zinc-900 aspect-[4/5] overflow-hidden cursor-pointer" onclick="openProductModal(${product.id})">
+                        <img src="${mainImg}" alt="${product.name}" onerror="this.src='https://placehold.co/600x800/141414/71717a?text=LH+STORE'" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 absolute inset-0 ${product.imageHover ? 'group-hover:opacity-0' : ''}">
+                        ${product.imageHover ? `<img src="${hoverImg}" alt="${product.name}" class="w-full h-full object-cover absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500">` : ''}
+                        
+                        ${product.tag ? `<div class="absolute top-3 left-3 z-10"><span class="bg-white text-black text-[10px] font-extrabold uppercase px-2.5 py-1 rounded shadow">${product.tag}</span></div>` : ''}
+                        
+                        <div class="absolute top-3 right-3 z-10">
+                            <button onclick="event.stopPropagation(); toggleWishlist(${product.id})" class="w-9 h-9 bg-black/60 backdrop-blur rounded-full flex items-center justify-center text-zinc-300 hover:text-white transition shadow">
+                                <i class="${isWishlisted ? 'fa-solid text-red-500' : 'fa-regular'} fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-5 flex flex-col flex-1 justify-between">
+                        <div>
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-zinc-500">${product.category}</span>
+                            <h3 onclick="openProductModal(${product.id})" class="font-bold text-xs sm:text-sm uppercase tracking-tight mt-1 mb-2 text-white hover:text-zinc-300 cursor-pointer line-clamp-1">${product.name}</h3>
+                            <div class="text-sm sm:text-base font-extrabold text-white mb-4">R$ ${Number(product.price).toFixed(2).replace('.', ',')}</div>
+                        </div>
+                        <button onclick="openProductModal(${product.id})" class="w-full bg-zinc-800 hover:bg-zinc-700 text-white font-bold text-[11px] uppercase tracking-wider py-3 rounded-xl transition text-center shadow">
+                            Ver Peça
+                        </button>
+                    </div>
+                `;
+                productsGrid.appendChild(card);
+            });
+        }
+
+        function openAdminModal() {
+            updateAdminList();
+            adminModal.classList.remove('hidden');
+            setTimeout(() => {
+                adminBackdrop.classList.add('opacity-100');
+                adminContent.classList.remove('scale-95', 'opacity-0');
+                adminContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeAdminModal() {
+            adminBackdrop.classList.remove('opacity-100');
+            adminContent.classList.remove('scale-100', 'opacity-100');
+            adminContent.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                adminModal.classList.add('hidden');
+            }, 300);
+        }
+
+        function handleProductSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('p-name').value;
+            const category = document.getElementById('p-category').value;
+            const price = parseFloat(document.getElementById('p-price').value);
+            const tag = document.getElementById('p-tag').value;
+            const image = document.getElementById('p-image').value;
+            const imageHover = document.getElementById('p-image-hover').value;
+            const description = document.getElementById('p-desc').value;
+
+            const newProduct = {
+                id: Date.now(),
+                name,
+                category,
+                price,
+                tag,
+                image,
+                imageHover,
+                description,
+                sizes: ["P", "M", "G", "GG"]
+            };
+
+            products.push(newProduct);
+            localStorage.setItem('lh_custom_products', JSON.stringify(products));
+
+            document.getElementById('product-form').reset();
+            renderProducts();
+            updateAdminList();
+            showToast('Cadastrado!', 'Nova peça adicionada com sucesso ao catálogo.');
+        }
+
+        function deleteProduct(id) {
+            products = products.filter(p => p.id !== id);
+            localStorage.setItem('lh_custom_products', JSON.stringify(products));
+            renderProducts();
+            updateAdminList();
+            showToast('Removido', 'Peça excluída do estoque.');
+        }
+
+        function updateAdminList() {
+            adminTotalCount.textContent = products.length;
+            if (products.length === 0) {
+                adminProductsList.innerHTML = `<p class="text-[11px] text-zinc-500 py-4 text-center">Nenhuma peça cadastrada ainda.</p>`;
+                return;
+            }
+
+            adminProductsList.innerHTML = '';
+            products.forEach(p => {
+                const item = document.createElement('div');
+                item.className = 'flex items-center justify-between py-2.5';
+                item.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <img src="${p.image}" onerror="this.src='https://placehold.co/100x100/141414/71717a?text=LH'" class="w-10 h-10 object-cover rounded-lg bg-zinc-900 border border-zinc-800">
+                        <div>
+                            <h4 class="text-xs font-bold uppercase text-white">${p.name}</h4>
+                            <span class="text-[10px] text-zinc-400">R$ ${Number(p.price).toFixed(2).replace('.', ',')} • <strong class="uppercase">${p.category}</strong></span>
+                        </div>
+                    </div>
+                    <button onclick="deleteProduct(${p.id})" class="text-zinc-500 hover:text-red-400 text-xs p-2 transition"><i class="fa-solid fa-trash"></i></button>
+                `;
+                adminProductsList.appendChild(item);
+            });
+        }
+
+        function openProductModal(id) {
+            const product = products.find(p => p.id === id);
+            if (!product) return;
+
+            selectedProductForModal = product;
+            selectedModalSize = 'P';
+            modalQuantity = 1;
+
+            modalImg.src = product.image;
+            modalCategory.textContent = product.category;
+            
+            if (product.tag) {
+                modalTagBadge.textContent = product.tag;
+                modalTagBadge.classList.remove('hidden');
+            } else {
+                modalTagBadge.classList.add('hidden');
+            }
+
+            modalTitle.textContent = product.name;
+            modalPrice.textContent = `R$ ${Number(product.price).toFixed(2).replace('.', ',')}`;
+            modalDesc.textContent = product.description;
+            modalQty.textContent = modalQuantity;
+
+            // Render sizes
+            modalSizes.innerHTML = '';
+            const sizes = product.sizes || ["P", "M", "G", "GG"];
+            sizes.forEach((size, idx) => {
+                const btn = document.createElement('button');
+                btn.className = `px-4 py-2 rounded-xl text-xs font-bold uppercase transition border ${idx === 0 ? 'bg-white text-black border-white' : 'bg-zinc-900 text-zinc-300 border-zinc-800'}`;
+                btn.textContent = size;
+                btn.onclick = () => {
+                    modalSizes.querySelectorAll('button').forEach(b => {
+                        b.className = 'px-4 py-2 rounded-xl text-xs font-bold uppercase transition border bg-zinc-900 text-zinc-300 border-zinc-800';
+                    });
+                    btn.className = 'px-4 py-2 rounded-xl text-xs font-bold uppercase transition border bg-white text-black border-white';
+                    selectedModalSize = size;
+                };
+                modalSizes.appendChild(btn);
+            });
+
+            productModal.classList.remove('hidden');
+            setTimeout(() => {
+                modalBackdrop.classList.add('opacity-100');
+                modalContent.classList.remove('scale-95', 'opacity-0');
+                modalContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeModal() {
+            modalBackdrop.classList.remove('opacity-100');
+            modalContent.classList.remove('scale-100', 'opacity-100');
+            modalContent.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                productModal.classList.add('hidden');
+            }, 300);
+        }
+
+        function addToCart(productId, size, quantity) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const existingIndex = cart.findIndex(item => item.id === productId && item.size === size);
+            if (existingIndex > -1) {
+                cart[existingIndex].quantity += quantity;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    size: size,
+                    quantity: quantity
+                });
+            }
+
+            localStorage.setItem('lh_cart', JSON.stringify(cart));
+            updateCartUI();
+            showToast('Adicionado!', `${product.name} (Tam: ${size}) inserido na sacola.`);
+        }
+
+        function updateCartQuantity(productId, size, delta) {
+            const index = cart.findIndex(item => item.id === productId && item.size === size);
+            if (index > -1) {
+                cart[index].quantity += delta;
+                if (cart[index].quantity <= 0) {
+                    cart.splice(index, 1);
+                }
+                localStorage.setItem('lh_cart', JSON.stringify(cart));
+                updateCartUI();
+            }
+        }
+
+        function removeFromCart(productId, size) {
+            cart = cart.filter(item => !(item.id === productId && item.size === size));
+            localStorage.setItem('lh_cart', JSON.stringify(cart));
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            cartItemCount.textContent = totalItems;
+
+            if (totalItems === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div class="flex flex-col items-center justify-center py-20 text-center text-zinc-500">
+                        <i class="fa-solid fa-bag-shopping text-3xl mb-3 text-zinc-700"></i>
+                        <p class="text-[11px] uppercase font-bold tracking-wider">Sua sacola está vazia</p>
+                    </div>
+                `;
+                cartSubtotal.textContent = 'R$ 0,00';
+                cartTotal.textContent = 'R$ 0,00';
+                return;
+            }
+
+            cartItemsContainer.innerHTML = '';
+            let subtotal = 0;
+
+            cart.forEach(item => {
+                subtotal += item.price * item.quantity;
+                const itemEl = document.createElement('div');
+                itemEl.className = 'flex gap-4 pt-4 first:pt-0';
+                itemEl.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}" class="w-16 h-20 object-cover rounded-xl bg-zinc-900 border border-zinc-800">
+                    <div class="flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start">
+                                <h4 class="font-bold text-xs uppercase tracking-tight text-white">${item.name}</h4>
+                                <button onclick="removeFromCart(${item.id}, '${item.size}')" class="text-zinc-500 hover:text-red-400 transition text-xs"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                            <span class="text-[11px] text-zinc-400">Tamanho: <strong class="text-white">${item.size}</strong></span>
+                        </div>
+                        <div class="flex justify-between items-center mt-2">
+                            <span class="font-extrabold text-xs text-white">R$ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}</span>
+                            <div class="flex items-center border border-zinc-800 rounded-lg bg-zinc-900 overflow-hidden">
+                                <button onclick="updateCartQuantity(${item.id}, '${item.size}', -1)" class="px-2 py-1 text-zinc-400 hover:text-white"><i class="fa-solid fa-minus text-[10px]"></i></button>
+                                <span class="px-2.5 text-xs font-bold text-white">${item.quantity}</span>
+                                <button onclick="updateCartQuantity(${item.id}, '${item.size}', 1)" class="px-2 py-1 text-zinc-400 hover:text-white"><i class="fa-solid fa-plus text-[10px]"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                cartItemsContainer.appendChild(itemEl);
+            });
+
+            cartSubtotal.textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+            cartTotal.textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+        }
+
+        function openCart() {
+            cartDrawer.classList.remove('hidden');
+            setTimeout(() => {
+                cartBackdrop.classList.remove('opacity-0');
+                cartPanel.classList.remove('translate-x-full');
+            }, 10);
+        }
+
+        function closeCart() {
+            cartBackdrop.classList.add('opacity-0');
+            cartPanel.classList.add('translate-x-full');
+            setTimeout(() => {
+                cartDrawer.classList.add('hidden');
+            }, 300);
+        }
+
+        function toggleWishlist(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const index = wishlist.findIndex(item => item.id === productId);
+            if (index > -1) {
+                wishlist.splice(index, 1);
+                showToast('Removido', `${product.name} removido dos favoritos.`);
+            } else {
+                wishlist.push(product);
+                showToast('Favoritado!', `${product.name} salvo nos favoritos.`);
+            }
+
+            localStorage.setItem('lh_wishlist', JSON.stringify(wishlist));
+            updateWishlistUI();
+            renderProducts();
+        }
+
+        function updateWishlistUI() {
+            wishlistCount.textContent = wishlist.length;
+            if (wishlist.length > 0) {
+                wishlistCount.classList.remove('hidden');
+            } else {
+                wishlistCount.classList.add('hidden');
+            }
+
+            if (wishlist.length === 0) {
+                wishlistItemsContainer.innerHTML = `
+                    <div class="flex flex-col items-center justify-center py-20 text-center text-zinc-500">
+                        <i class="fa-regular fa-heart text-3xl mb-3 text-zinc-700"></i>
+                        <p class="text-[11px] uppercase font-bold tracking-wider">Sua lista de desejos está vazia</p>
+                    </div>
+                `;
+                return;
+            }
+
+            wishlistItemsContainer.innerHTML = '';
+            wishlist.forEach(item => {
+                const itemEl = document.createElement('div');
+                itemEl.className = 'flex gap-4 pt-4 first:pt-0';
+                itemEl.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}" class="w-16 h-20 object-cover rounded-xl bg-zinc-900 border border-zinc-800">
+                    <div class="flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start">
+                                <h4 class="font-bold text-xs uppercase tracking-tight text-white">${item.name}</h4>
+                                <button onclick="toggleWishlist(${item.id})" class="text-zinc-500 hover:text-red-400 transition text-xs"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                            <span class="text-[11px] text-zinc-400 uppercase">${item.category}</span>
+                        </div>
+                        <div class="flex justify-between items-center mt-2">
+                            <span class="font-extrabold text-xs text-white">R$ ${Number(item.price).toFixed(2).replace('.', ',')}</span>
+                            <button onclick="openProductModal(${item.id}); closeWishlist();" class="bg-white text-black font-bold text-[10px] uppercase tracking-wider px-3 py-2 rounded-lg hover:bg-zinc-200 transition shadow">
+                                Ver Peça
+                            </button>
+                        </div>
+                    </div>
+                `;
+                wishlistItemsContainer.appendChild(itemEl);
+            });
+        }
+
+        function openWishlist() {
+            wishlistDrawer.classList.remove('hidden');
+            setTimeout(() => {
+                wishlistBackdrop.classList.remove('opacity-0');
+                wishlistPanel.classList.remove('translate-x-full');
+            }, 10);
+        }
+
+        function closeWishlist() {
+            wishlistBackdrop.classList.add('opacity-0');
+            wishlistPanel.classList.add('translate-x-full');
+            setTimeout(() => {
+                wishlistDrawer.classList.add('hidden');
+            }, 300);
+        }
+
+        function showToast(title, message, type = 'success') {
+            toastTitle.textContent = title;
+            toastMsg.textContent = message;
+            
+            const icon = document.getElementById('toast-icon');
+            if (type === 'error') {
+                icon.className = 'fa-solid fa-circle-exclamation text-red-400 text-base';
+            } else {
+                icon.className = 'fa-solid fa-circle-check text-green-400 text-base';
+            }
+
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3500);
+        }
+    </script>
+</body>
+</html>
